@@ -19,7 +19,7 @@ const request = async <T = unknown, R = unknown>(
     ...(body ? { body: JSON.stringify(body) } : {}),
     credentials: 'include',
   };
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+  const API_BASE_URL = process.env.__NEXT_PRIVATE_ORIGIN || '';
 
   const response = await fetch(`${API_BASE_URL}${url}`, config);
 
