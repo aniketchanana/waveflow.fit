@@ -19,8 +19,7 @@ const request = async <T = unknown, R = unknown>(
     ...(body ? { body: JSON.stringify(body) } : {}),
     credentials: 'include',
   };
-  const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-
+  const API_BASE_URL = 'http://localhost:3000'; // Specify client URL of the host
   const response = await fetch(`${API_BASE_URL}${url}`, config);
 
   if (!response.ok) {
