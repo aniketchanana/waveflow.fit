@@ -20,7 +20,7 @@ const request = async <T = unknown, R = unknown>(
     credentials: 'include',
   };
   const API_BASE_URL = process.env.__NEXT_PRIVATE_ORIGIN || '';
-
+  console.log('calling ===>', `${API_BASE_URL}${url}`);
   const response = await fetch(`${API_BASE_URL}${url}`, config);
 
   if (!response.ok) {
