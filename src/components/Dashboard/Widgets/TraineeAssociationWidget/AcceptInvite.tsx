@@ -102,7 +102,7 @@ const AcceptInvite = () => {
                 alignItems='center'
               >
                 <Chip label={invite_status} size='small' />
-                <MaxCharTypography maxchars={40} variant='body2'>
+                <MaxCharTypography maxchars={40}>
                   {invited_by?.name} ({invited_by?.email})
                 </MaxCharTypography>
                 <ActionButton status={invite_status} inviteId={id as string} />
