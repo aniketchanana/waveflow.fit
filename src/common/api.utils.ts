@@ -19,7 +19,7 @@ const request = async <T = unknown, R = unknown>(
     ...(body ? { body: JSON.stringify(body) } : {}),
     credentials: 'include',
   };
-  const API_BASE_URL = 'http://localhost:3000'; // Specify client URL of the host
+  const API_BASE_URL = 'https://waveflowfit.vercel.app';
   const response = await fetch(`${API_BASE_URL}${url}`, config);
 
   if (!response.ok) {
