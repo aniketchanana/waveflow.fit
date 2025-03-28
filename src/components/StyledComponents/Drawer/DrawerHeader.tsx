@@ -1,12 +1,17 @@
 import { Close } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 
 import HStack from '@/components/StyledComponents/HStack';
 
 const DrawerHeader = ({
   children,
   handleClose,
+  isCreatingTemplate = false,
+  isViewOnlyMode = false,
 }: {
+  isCreatingTemplate?: boolean;
+  isViewOnlyMode?: boolean;
   children: string;
   handleClose?: () => void;
 }) => {
@@ -17,9 +22,16 @@ const DrawerHeader = ({
       alignItems='center'
       justifyContent='space-between'
     >
-      <Typography variant='h6'>{children}</Typography>
+      <HStack alignItems='center' gap={1}>
+        <Typography variant='h6'>{children}</Typography>
+        {isViewOnlyMode && (
+          <Tooltip title='View mode'>
+            <VisibilityIcon />
+          </Tooltip>
+        )}
+      </HStack>
       {handleClose && (
-        <IconButton onClick={handleClose}>
+        <IconButton onClick={handleClose} disabled={isCreatingTemplate}>
           <Close />
         </IconButton>
       )}

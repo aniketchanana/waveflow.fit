@@ -1,5 +1,5 @@
 'use client';
-import { CircularProgress } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 import CenterAlign from '@/components/StyledComponents/CenterAlign';
 import ErrorComponent from '@/components/StyledComponents/ErrorComponent';
@@ -10,14 +10,17 @@ const DynamicRenderer = ({
   isLoading,
   isError = false,
   isNoResultFound = false,
+  height = '100%',
 }: {
   children: React.ReactNode;
   isLoading: boolean;
   isError?: boolean;
   isNoResultFound?: boolean;
+  height?: string;
 }) => {
+  let component: React.ReactNode | null = null;
   if (isLoading) {
-    return (
+    component = (
       <CenterAlign>
         <CircularProgress />
       </CenterAlign>
@@ -25,7 +28,7 @@ const DynamicRenderer = ({
   }
 
   if (isError) {
-    return (
+    component = (
       <ErrorComponent
         imageProps={{ height: '150', width: '150' }}
         text='Something went wrong, Unable to get data'
@@ -34,12 +37,15 @@ const DynamicRenderer = ({
   }
 
   if (isNoResultFound) {
-    return (
+    component = (
       <NoResultFound
         imageProps={{ height: '150', width: '150' }}
         text='No result found'
       />
     );
+  }
+  if (component) {
+    return <Box height={height}>{component}</Box>;
   }
   return children;
 };

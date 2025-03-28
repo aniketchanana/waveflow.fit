@@ -2,7 +2,7 @@
 
 import { v4 } from 'uuid';
 
-import { EExerciseLoggingType } from '@/common/constants';
+import { EExerciseLoggingType, ETemplateType } from '@/common/constants';
 import Creator from '@/components/TemplateCreator/Creator';
 import ItemList from '@/components/TemplateCreator/ItemList';
 import ExerciseItem, {
@@ -13,8 +13,8 @@ export type TWorkoutPlan = {
   workoutName: string;
   workoutExercises: TWorkoutExercise[];
 };
-
-export const getExerciseId = () => `exercises-${v4()}`;
+const workoutCreatorPrefix = 'workoutExercises';
+export const getExerciseId = () => `${workoutCreatorPrefix}-${v4()}`;
 
 const getBaseExercise = () => ({
   id: getExerciseId(),
@@ -37,18 +37,27 @@ const ExerciseList = ({
   );
 };
 
-const WorkoutCreator = () => {
+const WorkoutCreator = ({
+  appendNewTemplate,
+  viewTemplate = null,
+}: {
+  appendNewTemplate: (newTemplate: ITemplate) => void;
+  viewTemplate: Record<string, any> | null;
+}) => {
   return (
     <Creator<TWorkoutPlan, TWorkoutExercise>
       initState={{
         workoutName: '',
         workoutExercises: [],
       }}
-      groupPrefix='workoutExercises'
+      groupPrefix={workoutCreatorPrefix}
       createNewBtnText='Create new workout'
       drawerHeader='Create workout'
       planNameKey='workoutName'
       list={ExerciseList}
+      templateType={ETemplateType.WORKOUT}
+      appendNewTemplate={appendNewTemplate}
+      viewTemplate={viewTemplate}
     />
   );
 };

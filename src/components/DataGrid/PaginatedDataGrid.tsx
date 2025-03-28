@@ -4,7 +4,7 @@ import { CircularProgress, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import { debounce, get, upperCase } from 'lodash';
+import { get, upperCase } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { api } from '@/common/api.utils';
@@ -14,6 +14,7 @@ import CenterAlign from '@/components/StyledComponents/CenterAlign';
 import NoResultFound from '@/components/StyledComponents/NoResultFound';
 import SectionContainer from '@/components/StyledComponents/SectionContainer';
 import useToast, { EToastType } from '@/components/Toast/useToast';
+import useDebounceInput from '@/hooks/useDebounceInput';
 
 export enum EColType {
   TEXT = 'TEXT',
@@ -34,6 +35,7 @@ type Props<T extends { id: string }> = {
   searchKey?: string;
   disableColumnMenu?: boolean;
   actions?: React.ReactNode;
+  searchPlaceholder?: string;
 };
 const PaginatedDataGrid = <T extends { id: string }>({
   columns,
@@ -43,6 +45,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
   disableColumnMenu = true,
   searchKey = '',
   actions = null,
+  searchPlaceholder = 'Search...',
 }: Props<T>) => {
   const [state, setState] = useState<{
     data: T[];
@@ -55,8 +58,7 @@ const PaginatedDataGrid = <T extends { id: string }>({
   const [totalRowCount, setTotalRowCount] = useState(0);
   const [sortBy, setSortBy] = useState<null | string>(null);
   const [sortOrder, setSortOrder] = useState<null | ESortOrder>(null);
-  const [searchTextInput, setSearchTextInput] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const { searchText, setInputVal, inputVal } = useDebounceInput();
   const [isGridReady, setIsGridReady] = useState(false);
   const memoizedColumns = useMemo(() => {
     return columns.map((col) => {
@@ -84,11 +86,6 @@ const PaginatedDataGrid = <T extends { id: string }>({
       return updatedCol;
     });
   }, [columns, disableColumnMenu]);
-
-  const debouncedSetSearchText = useMemo(
-    () => debounce((text: string) => setSearchText(text), 500),
-    []
-  );
 
   const fetchData = useCallback(async () => {
     try {
@@ -134,10 +131,6 @@ const PaginatedDataGrid = <T extends { id: string }>({
     fetchData();
   }, [fetchData]);
 
-  useEffect(() => {
-    debouncedSetSearchText(searchTextInput);
-  }, [debouncedSetSearchText, searchTextInput]);
-
   return (
     <SectionContainer sx={{ py: 1 }}>
       <Box
@@ -153,10 +146,10 @@ const PaginatedDataGrid = <T extends { id: string }>({
         <Box width='100%' justifyContent='space-between' display='flex'>
           {searchKey && (
             <SearchByText
-              placeholder='Search...'
-              value={searchTextInput}
-              onChange={(e) => setSearchTextInput(e.target.value)}
-              onClearIconClick={() => setSearchTextInput('')}
+              placeholder={searchPlaceholder}
+              value={inputVal}
+              onChange={(e) => setInputVal(e.target.value)}
+              onClearIconClick={() => setInputVal('')}
             />
           )}
           {actions}

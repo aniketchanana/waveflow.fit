@@ -2,7 +2,7 @@
 
 import { v4 } from 'uuid';
 
-import { EMealType } from '@/common/constants';
+import { EMealType, ETemplateType } from '@/common/constants';
 import Creator from '@/components/TemplateCreator/Creator';
 import DietItem, {
   TDietItem,
@@ -13,7 +13,7 @@ export type TDietPlan = {
   dietName: string;
   dietFoodItems: TDietItem[];
 };
-
+const dietCreatorPrefix = 'dietFoodItems';
 export const getDietId = () => `dietFoodItems-${v4()}`;
 const getBaseDiet = () => ({
   id: getDietId(),
@@ -33,18 +33,27 @@ const DietItemList = ({ defaultItems }: { defaultItems: TDietItem[] }) => {
   );
 };
 
-const DietCreator = () => {
+const DietCreator = ({
+  appendNewTemplate,
+  viewTemplate = null,
+}: {
+  appendNewTemplate: (newTemplate: ITemplate) => void;
+  viewTemplate: Record<string, any> | null;
+}) => {
   return (
     <Creator<TDietPlan, TDietItem>
       initState={{
         dietName: '',
         dietFoodItems: [],
       }}
-      groupPrefix='dietFoodItems'
+      groupPrefix={dietCreatorPrefix}
       createNewBtnText='Create new diet'
       drawerHeader='Create diet'
       planNameKey='dietName'
       list={DietItemList}
+      templateType={ETemplateType.DIET}
+      appendNewTemplate={appendNewTemplate}
+      viewTemplate={viewTemplate}
     />
   );
 };

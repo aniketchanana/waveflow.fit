@@ -42,6 +42,12 @@ interface IAssociation extends IBasicModelProps {
   invite?: IInvite;
 }
 
+interface ITemplate extends IBasicModelProps {
+  template_name: string;
+  template_type: ETemplateType;
+  template: Record<string, any>;
+}
+
 interface ReducerAction<T = any> {
   payload?: T;
   type?: string;

@@ -29,9 +29,9 @@ const SuggestedIntensity = ({
   const loggingFields = useMemo(
     () => ({
       [EExerciseLoggingType.WEIGHT_REP_COUNT]: [
+        { name: 'countPerRep', label: 'Count' },
         { name: 'reps', label: 'Reps' },
         { name: 'weight', label: 'kg' },
-        { name: 'countPerRep', label: 'Count' },
       ],
       [EExerciseLoggingType.TIME_WEIGHT]: [
         { name: 'weight', label: 'kg' },
@@ -57,7 +57,7 @@ const SuggestedIntensity = ({
             type={rest.placeholder ? 'string' : 'number'}
             slotProps={{
               input: {
-                inputProps: { min: 1 },
+                inputProps: { min: 0 },
                 endAdornment: label && (
                   <InputAdornment position='end'>{label}</InputAdornment>
                 ),

@@ -69,6 +69,7 @@ const Trainees = () => {
       <PaginatedDataGrid<TTraineeData>
         columns={columns}
         searchKey='trainee.name'
+        searchPlaceholder='Search by name'
         dataEndpoint={MANAGEMENT_TRAINER_ENDPOINTS.GET_ALL_ASSOCIATION}
         actions={<AddNewTraineePopOver />}
       />

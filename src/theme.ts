@@ -85,6 +85,7 @@ const theme = createTheme({
         root: {
           borderRadius: '0.5rem',
           width: 'fit-content',
+          whiteSpace: 'nowrap',
           height: 'fit-content',
           textTransform: 'none',
         },
@@ -234,6 +235,16 @@ const theme = createTheme({
           },
           '& .MuiCheckbox-root': {
             paddingRight: '0.25rem',
+          },
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: '0.5rem',
+          '&:last-child': {
+            paddingBottom: '0.5rem',
           },
         },
       },
