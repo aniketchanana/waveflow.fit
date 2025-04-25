@@ -1,5 +1,5 @@
 'use client';
-import { PeopleAlt } from '@mui/icons-material';
+import { Home, PeopleAlt } from '@mui/icons-material';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import WindowIcon from '@mui/icons-material/Window';
 import {
@@ -15,6 +15,7 @@ import { useContext, useMemo, useState } from 'react';
 
 import { MANAGEMENT_MANAGER_ENDPOINTS } from '@/common/apiEndpoints';
 import { isMobileScreen } from '@/common/app.utils';
+import { ROUTE_URLS } from '@/common/appUrls';
 import DeleteGymCenterMemberRenderer from '@/components/DataGrid/CellRenderers/DeleteGymCenterMemberRenderer';
 import EditGymCenterMemberRenderer from '@/components/DataGrid/CellRenderers/EditGymCenterMemberRenderer';
 import PaginatedDataGrid from '@/components/DataGrid/PaginatedDataGrid';
@@ -25,8 +26,10 @@ import GymMemberCard, {
 } from '@/components/Members/GymMemberCard';
 import GymMemberDrawer from '@/components/Members/GymMemberDrawer';
 import HStack from '@/components/StyledComponents/HStack';
+import NoResultFound from '@/components/StyledComponents/NoResultFound';
 import { GymCenterCtx } from '@/context/GymCenterProvider';
 import { ColDef } from '@/types/common';
+import Link from 'next/link';
 
 const columns: ColDef[] = [
   {
@@ -128,7 +131,23 @@ const Members = () => {
       </HStack>
     );
   };
-
+  if (noGymCenter) {
+    return (
+      <NoResultFound
+        text='Please create a gym center to continue'
+        actionBtn={
+          <Button
+            startIcon={<Home />}
+            variant='outlined'
+            href={ROUTE_URLS.dashboard}
+            LinkComponent={Link}
+          >
+            Create gym center
+          </Button>
+        }
+      />
+    );
+  }
   return (
     <DynamicRenderer
       isLoading={isGymCenterLoading}

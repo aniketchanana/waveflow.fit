@@ -32,18 +32,18 @@ const GymCenterProvider = ({ children }: { children: ReactNode }) => {
   );
   const [isGymCenterLoading, setIsGymCenterLoading] = useState(true);
   const [isGymCenterLoadingErr, setIsGymCenterLoadingErr] = useState(false);
-
+  console.log(gymCenterDetails);
   useEffect(() => {
     (async () => {
       try {
         setIsGymCenterLoading(true);
         setGymCenterDetails(null);
         setIsGymCenterLoadingErr(false);
-        const gymCenterDetailsResponse = await api.get<IGymCenter>(
+        const gymCenterDetails = await api.get<IGymCenter>(
           MANAGEMENT_MANAGER_ENDPOINTS.GET_GYM_CENTER
         );
-        if (!isEmpty(gymCenterDetailsResponse)) {
-          setGymCenterDetails(gymCenterDetailsResponse);
+        if (!isEmpty(gymCenterDetails?.id)) {
+          setGymCenterDetails(gymCenterDetails);
         }
       } catch {
         setIsGymCenterLoadingErr(true);

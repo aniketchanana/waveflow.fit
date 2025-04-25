@@ -8,10 +8,12 @@ const NoResultFound = ({
   text = '',
   imageProps = {},
   textProps = {},
+  actionBtn = null,
 }: Partial<{
   text: string;
   imageProps: Record<string, string | number>;
   textProps: Record<string, string>;
+  actionBtn?: React.ReactNode;
 }>) => {
   return (
     <CenterAlign flexDirection='column' gap={1}>
@@ -34,6 +36,7 @@ const NoResultFound = ({
           {text}
         </Typography>
       )}
+      {actionBtn}
     </CenterAlign>
   );
 };
