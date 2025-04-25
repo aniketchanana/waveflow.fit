@@ -1,6 +1,7 @@
 import uniqueId from 'lodash/uniqueId';
 
 import { PAGINATION } from '@/common/constants';
+import { MAX_MOBILE_SIZE } from '@/components/StyledComponents/MaxScreenSizeRestrictOverlay';
 
 export const convertFormDataToJson = (formData: FormData) => {
   return formData.entries().reduce((prevVal, currVal) => {
@@ -127,4 +128,17 @@ export const flattenNestedObject = (
 
   recurse(obj);
   return result;
+};
+
+export const isValidIndianPhone = (number) => {
+  const regex = /^[6-9]\d{9}$/;
+  return regex.test(number);
+};
+
+export const isValidEmail = (email) => {
+  return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
+};
+
+export const isMobileScreen = () => {
+  return window.innerWidth < MAX_MOBILE_SIZE;
 };

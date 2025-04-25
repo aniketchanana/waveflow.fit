@@ -13,7 +13,7 @@ const SearchByText = ({
       value={value}
       placeholder={placeholder}
       sx={{
-        width: '16.5rem',
+        width: '20.5rem',
         '& .MuiInputBase-input': {
           py: 0.5,
         },

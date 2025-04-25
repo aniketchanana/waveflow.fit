@@ -1,14 +1,17 @@
 import { Box } from '@mui/material';
 
+import { EUserRole } from '@/common/constants';
+import GymManagement from '@/components/Dashboard/GymManagement/GymManagement';
 import UserTitle from '@/components/Dashboard/UserTitle';
-import WidgetsSection from '@/components/Dashboard/Widgets/WidgetsSection';
+import RoleFlag from '@/components/RoleFlag/RoleFlag';
 
 const Dashboard = () => {
   return (
-    <Box display='flex' flexDirection='column' gap={0.5}>
+    <Box display='flex' flexDirection='column' gap={2}>
       <UserTitle />
-
-      <WidgetsSection />
+      <RoleFlag allowedFor={EUserRole.MANAGER}>
+        <GymManagement />
+      </RoleFlag>
     </Box>
   );
 };

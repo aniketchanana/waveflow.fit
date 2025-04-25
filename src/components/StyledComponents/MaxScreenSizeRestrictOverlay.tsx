@@ -4,10 +4,11 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import CenterAlign from '@/components/StyledComponents/CenterAlign';
-
+const MIN_MOBILE_SIZE = 350;
+export const MAX_MOBILE_SIZE = 900;
 const MaxScreenSizeRestrictOverlay = () => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down(410));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(MIN_MOBILE_SIZE));
 
   if (!isSmallScreen) return null;
 
@@ -29,7 +30,7 @@ const MaxScreenSizeRestrictOverlay = () => {
         Screen Too Small
       </Typography>
       <Typography variant='body1' mt={1}>
-        Please use a larger screen (≥ 410px) to access this app.
+        Please use a larger screen to access this app.
       </Typography>
     </CenterAlign>
   );

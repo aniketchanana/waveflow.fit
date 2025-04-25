@@ -2,6 +2,7 @@
 import { Alert, Snackbar } from '@mui/material';
 import { createContext, useCallback, useState } from 'react';
 
+import { isMobileScreen } from '@/common/app.utils';
 import { EToastType } from '@/components/Toast/useToast';
 
 type TAlertOpts = {
@@ -38,6 +39,11 @@ const ToastProvider = ({ children }: { children: React.ReactNode }) => {
           open={Boolean(alertOpts?.show)}
           autoHideDuration={alertOpts?.duration}
           onClose={handleClose}
+          anchorOrigin={
+            isMobileScreen()
+              ? { vertical: 'top', horizontal: 'right' }
+              : { vertical: 'bottom', horizontal: 'right' }
+          }
         >
           <Alert
             onClose={handleClose}

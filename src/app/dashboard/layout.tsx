@@ -5,11 +5,12 @@ import { redirect } from 'next/navigation';
 import { ROUTE_URLS } from '@/common/appUrls';
 import { EUserRole } from '@/common/constants';
 import AppContainer from '@/components/AppContainer/AppContainer';
+import ReactQueryProvider from '@/components/ReactQueryProvider/ReactQueryProvider';
 import RoleFlag from '@/components/RoleFlag/RoleFlag';
 import { getSession } from '@/components/SessionProvider/auth.utils';
 import SessionProvider from '@/components/SessionProvider/SessionProvider';
 import UserOnBoarding from '@/components/UserOnBoarding/UserOnBoarding';
-import TraineeRelationship from '@/context/TraineeRelationship';
+import GymCenterProvider from '@/context/GymCenterProvider';
 
 export const metadata: Metadata = {
   title: 'Gym manager',
@@ -30,18 +31,20 @@ const DashboardLayout = async ({
 
   // on session has a loading state without session app won't load
   return (
-    <SessionProvider serverSession={session}>
-      <UserOnBoarding>
-        <RoleFlag
-          allowedFor={EUserRole.TRAINEE}
-          fallback={<AppContainer>{children}</AppContainer>}
-        >
-          <TraineeRelationship>
-            <AppContainer>{children}</AppContainer>
-          </TraineeRelationship>
-        </RoleFlag>
-      </UserOnBoarding>
-    </SessionProvider>
+    <ReactQueryProvider>
+      <SessionProvider serverSession={session}>
+        <UserOnBoarding>
+          <RoleFlag
+            allowedFor={EUserRole.MANAGER}
+            fallback={<AppContainer>{children}</AppContainer>}
+          >
+            <GymCenterProvider>
+              <AppContainer>{children}</AppContainer>
+            </GymCenterProvider>
+          </RoleFlag>
+        </UserOnBoarding>
+      </SessionProvider>
+    </ReactQueryProvider>
   );
 };
 

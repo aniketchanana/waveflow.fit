@@ -10,7 +10,7 @@ const NoResultFound = ({
   textProps = {},
 }: Partial<{
   text: string;
-  imageProps: Record<string, string>;
+  imageProps: Record<string, string | number>;
   textProps: Record<string, string>;
 }>) => {
   return (

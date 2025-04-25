@@ -1,11 +1,11 @@
 'use client';
 import { styled, Typography } from '@mui/material';
 
-const MaxCharTypography = styled(Typography)<{ maxchars: number }>(({
-  maxchars,
-}) => {
+const MaxCharTypography = styled(Typography)<{
+  maxchars: number;
+}>(({ maxchars }) => {
   return {
-    width: `${maxchars}ch`,
+    maxWidth: `${maxchars}ch`,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',

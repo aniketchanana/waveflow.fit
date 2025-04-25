@@ -31,3 +31,15 @@ export const TEMPLATE_CREATOR_ENDPOINTS = Object.freeze({
   DELETE_TEMPLATE: (templateId = ':templateId') =>
     `/api/template/delete/${templateId}`,
 });
+
+export const MANAGEMENT_MANAGER_ENDPOINTS = Object.freeze({
+  CREATE_GYM_CENTER: '/api/management/manager/create-gym-center',
+  UPDATE_GYM_CENTER: (centerId = ':centerId') =>
+    `/api/management/manager/update-gym-center/${centerId}`,
+  GET_GYM_CENTER: '/api/management/manager/get-gym-center',
+
+  GYM_CENTER_MEMBER: '/api/management/manager/members',
+  GET_GYM_CENTER_MEMBERS: '/api/management/manager/get-members',
+  GYM_CENTER_MEMBERS_GET_UPDATE_DELETE: (memberId = ':memberId') =>
+    `/api/management/manager/members/${memberId}`,
+});

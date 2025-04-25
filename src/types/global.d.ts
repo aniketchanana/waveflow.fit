@@ -48,6 +48,10 @@ interface ITemplate extends IBasicModelProps {
   template: Record<string, any>;
 }
 
+interface IManagedCenter extends IBasicModelProps {
+  name: string;
+  address: string;
+}
 interface ReducerAction<T = any> {
   payload?: T;
   type?: string;
@@ -69,3 +73,40 @@ interface PaginatedRequest<T = any> {
   filters?: Partial<T>;
   attributes?: Record<string, string[]> | string[];
 }
+
+interface IGymCenter extends IBasicModelProps {
+  manager_id: string;
+  manager?: IUser;
+  name: string;
+  phone_number: string;
+  email: string;
+  address: string;
+}
+
+type TGymCenterUpdateAbleValues = Pick<
+  IGymCenter,
+  'address' | 'name' | 'phone_number' | 'email'
+>;
+
+interface IGymCenterMember extends IBasicModelProps {
+  name: string;
+  email: string;
+  phone_number: string;
+  address?: string;
+  start_date?: Date;
+  end_date?: Date;
+  plan_name?: string;
+
+  gym_center_id: string;
+  gym_center?: IGymCenter;
+
+  manager_id: string;
+  manager?: IUser;
+
+  is_deleted: boolean;
+}
+
+type TGymCenterMember = Pick<
+  IGymCenterMember,
+  'name' | 'email' | 'address' | 'phone_number' | 'start_date' | 'end_date'
+>;

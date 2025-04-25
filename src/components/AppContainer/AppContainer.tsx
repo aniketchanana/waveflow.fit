@@ -3,8 +3,9 @@
 import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 
-import FloatingSidebar from '@/components/AppContainer/FloatingSidebar';
 import FloatingTopBar from '@/components/AppContainer/FloatingTopBar';
+import FloatingSidebar from '@/components/AppContainer/Sidebar/FloatingSidebar';
+import HorizontalNavBar from '@/components/AppContainer/Sidebar/HorizontalNavBar';
 
 type TAppContainer = { children: React.ReactNode };
 
@@ -21,7 +22,7 @@ const AppContainer = ({ children }: TAppContainer) => {
       width='100%'
       bgcolor={theme.palette.background.main}
     >
-      <Box display={{ xs: 'none', sm: 'flex' }} alignItems='center'>
+      <Box display={{ xs: 'none', md: 'flex' }} alignItems='center'>
         <FloatingSidebar />
       </Box>
 
@@ -32,22 +33,32 @@ const AppContainer = ({ children }: TAppContainer) => {
         width='100%'
         minWidth={{
           xs: '100%',
-          sm: `calc(100% - ${theme.custom.leftPanelWidthExpanded})`,
+          md: `calc(100% - ${theme.custom.leftPanelWidthExpanded})`,
         }}
         maxWidth={{
           xs: '100%',
-          sm: `calc(100% - ${theme.custom.leftPanelWidthMinimized})`,
+          md: `calc(100% - ${theme.custom.leftPanelWidthMinimized})`,
         }}
       >
         <Box height={theme.custom.headerHeight}>
           <FloatingTopBar />
         </Box>
         <Box
-          height={`calc(100% - ${theme.custom.headerHeight})`}
-          p='1rem'
+          height={{
+            xs: `calc(100% - ${theme.custom.headerHeight} - ${theme.custom.horizontalNavHeight})`,
+            md: `calc(100% - ${theme.custom.headerHeight})`,
+          }}
+          pr='1rem'
+          pl='0.5rem'
           sx={{ overflowY: 'auto' }}
         >
           {children}
+        </Box>
+        <Box
+          display={{ xs: 'flex', md: 'none' }}
+          height={theme.custom.horizontalNavHeight}
+        >
+          <HorizontalNavBar />
         </Box>
       </Box>
     </Box>

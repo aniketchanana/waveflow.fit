@@ -1,5 +1,6 @@
 export enum EUserRole {
   TRAINER = 'TRAINER',
+  MANAGER = 'MANAGER',
   TRAINEE = 'TRAINEE',
 }
 export enum EInviteStatus {
@@ -11,6 +12,7 @@ export enum EInviteStatus {
 export enum PAGINATION {
   DEFAULT_LIMIT = 20,
   DEFAULT_PAGE_NUM = 1,
+  MID_LIMIT = 40,
   LARGE_LIMIT = 100,
 }
 
@@ -40,3 +42,5 @@ export enum EMealType {
   POST_DINNER = 'POST_DINNER',
   MUNCHING = 'MUNCHING',
 }
+
+export const STANDARD_DATE_FORMAT = 'dd MMMM yyyy';

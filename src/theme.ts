@@ -44,9 +44,10 @@ const theme = createTheme({
   cssVariables: true,
   palette: gymThemePalette,
   custom: {
-    leftPanelWidthExpanded: '18rem',
-    leftPanelWidthMinimized: '8rem',
+    leftPanelWidthExpanded: '10rem',
+    leftPanelWidthMinimized: '6rem',
     headerHeight: '5rem',
+    horizontalNavHeight: '4rem',
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -72,8 +73,24 @@ const theme = createTheme({
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          padding: '0.375rem 0.75rem !important',
+          padding: '0.75rem !important',
           fontSize: '1rem !important',
+          lineHeight: '1rem !important',
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          padding: '0.5rem 0.25rem !important',
+        },
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          fontSize: '1rem !important',
+          transform: 'scale(1.5) !important',
         },
       },
     },
@@ -88,6 +105,8 @@ const theme = createTheme({
           whiteSpace: 'nowrap',
           height: 'fit-content',
           textTransform: 'none',
+          fontSize: '1rem !important',
+          lineHeight: '1rem !important',
         },
         containedPrimary: {
           backgroundColor: gymThemePalette.primary.main, // Primary main (slightly darker soft blue)
@@ -201,6 +220,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: '1rem',
+          height: '100%',
           '& .MuiSelect-select': {
             paddingTop: '0.75rem',
             paddingBottom: '0.75rem',
@@ -211,6 +231,7 @@ const theme = createTheme({
     },
     MuiOutlinedInput: {
       styleOverrides: {
+        root: { paddingLeft: '0.75rem' },
         input: {
           padding: '0.75rem',
           fontSize: '1rem',

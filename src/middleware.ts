@@ -10,6 +10,7 @@ const protectedRoutes: Record<string, string[]> = {
   [ROUTE_URLS.trainees]: [EUserRole.TRAINER],
   [ROUTE_URLS.diet]: [EUserRole.TRAINER],
   [ROUTE_URLS.workout]: [EUserRole.TRAINER],
+  [ROUTE_URLS.members]: [EUserRole.MANAGER],
 };
 
 export const middleware = async (req: NextRequest) => {
@@ -41,5 +42,10 @@ export const middleware = async (req: NextRequest) => {
 };
 
 export const config = {
-  matcher: ['/dashboard/diet', '/dashboard/workout', '/dashboard/trainees'],
+  matcher: [
+    '/dashboard/diet',
+    '/dashboard/workout',
+    '/dashboard/trainees',
+    '/dashboard/members',
+  ],
 };

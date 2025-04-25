@@ -5,4 +5,5 @@ export enum ROUTE_URLS {
   workout = '/dashboard/workout',
   diet = '/dashboard/diet',
   todo = '/dashboard/todo',
+  members = '/dashboard/members',
 }

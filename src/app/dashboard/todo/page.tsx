@@ -8,8 +8,8 @@ const Todo = () => {
     <CenterAlign flexDirection='column' gap={0.5}>
       <Image
         src='/coming_soon.svg'
-        height='500'
-        width='500'
+        height='200'
+        width='200'
         alt='coming soon'
       />
       <Typography variant='h2'>Coming soon...</Typography>

@@ -5,6 +5,7 @@ interface IVariables {
   custom: {
     leftPanelWidthExpanded: string;
     leftPanelWidthMinimized: string;
+    horizontalNavHeight: string;
     headerHeight: string;
     headerHeight: string;
   };

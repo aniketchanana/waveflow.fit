@@ -6,6 +6,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  Grid2 as Grid,
   InputLabel,
   MenuItem,
   OutlinedInput,
@@ -19,7 +20,7 @@ import { useActionState, useState } from 'react';
 
 import { api } from '@/common/api.utils';
 import { USER_ENDPOINTS } from '@/common/apiEndpoints';
-import { convertFormDataToJson } from '@/common/app.utils';
+import { convertFormDataToJson, isValidIndianPhone } from '@/common/app.utils';
 import { EUserRole } from '@/common/constants';
 import useSession from '@/components/SessionProvider/useSession';
 import useToast, { EToastType } from '@/components/Toast/useToast';
@@ -40,7 +41,9 @@ type TUserHealthProfile = typeof userHealthProfileInitialValues;
 
 const UserOnBoarding = ({ children }) => {
   const { fetchSession: refetchSession, session } = useSession();
-  const [userRole, setUserRole] = useState<EUserRole>(EUserRole.TRAINER);
+  const [userRole, setUserRole] = useState('');
+  const [whatsAppPhoneNumber, setWhatsAppPhoneNumber] = useState<string>('');
+  const [isPhoneNumberErrored, setIsPhoneNumberErrored] = useState(false);
   const { showToast } = useToast();
   const [formState, formAction, isPending] = useActionState(
     async (prevState: TUserHealthProfile, formData: FormData) => {
@@ -61,6 +64,7 @@ const UserOnBoarding = ({ children }) => {
             ),
           },
           userRole,
+          whatsAppPhoneNumber: whatsAppPhoneNumber,
         });
         await refetchSession();
         showToast({
@@ -82,14 +86,14 @@ const UserOnBoarding = ({ children }) => {
       width='100%'
       height='100%'
       display='flex'
-      justifyContent='center'
       alignItems='center'
       flexDirection='column'
     >
-      <Typography variant='h1'>Welcome aboard 🎉</Typography>
+      <Typography variant='h1' p={3}>
+        Welcome aboard 🎉
+      </Typography>
       <Box
         width={{ xs: '100%', md: '60%' }}
-        p={{ xs: 1, sm: 4, md: 6 }}
         display='flex'
         flexDirection='column'
         gap={1}
@@ -104,99 +108,155 @@ const UserOnBoarding = ({ children }) => {
             onChange={(e) => setUserRole(e.target.value as EUserRole)}
             sx={{ gap: 1 }}
           >
-            <FormControlLabel
+            {/* <FormControlLabel
               value={EUserRole.TRAINER}
               control={<Radio />}
               label='As Trainer'
-            />
+            /> */}
             <FormControlLabel
               value={EUserRole.TRAINEE}
               control={<Radio />}
               label='As Trainee'
             />
+            <FormControlLabel
+              value={EUserRole.MANAGER}
+              control={<Radio />}
+              label='As Gym manager'
+            />
           </RadioGroup>
         </FormControl>
 
-        <form action={formAction} className='flex flex-col gap-4'>
+        <FormControl>
+          <FormLabel sx={{ fontWeight: 'bold' }} required>
+            Whats app phone number
+          </FormLabel>
+          <TextField
+            required
+            name='whatsAppPhoneNumber'
+            type='number'
+            placeholder='ex: 9588195330'
+            onChange={(e) => {
+              const phone = e.target.value;
+              setWhatsAppPhoneNumber(phone);
+              setIsPhoneNumberErrored(!isValidIndianPhone(phone));
+            }}
+            error={isPhoneNumberErrored}
+            helperText={
+              isPhoneNumberErrored && 'Please enter valid phone number'
+            }
+          />
+        </FormControl>
+
+        <form action={formAction}>
           <FormLabel sx={{ fontWeight: 'bold' }}>
             Fill some basic information
           </FormLabel>
-          <Box className='grid grid-cols-2 gap-4'>
-            <TextField
-              name='blood_pressure'
-              label='Blood Pressure (mmHG)'
-              fullWidth
-              defaultValue={userHealthProfileInitialValues.blood_pressure}
-            />
-            <TextField
-              name='allergies'
-              label='Allergies'
-              fullWidth
-              defaultValue={userHealthProfileInitialValues.allergies}
-            />
-            <TextField
-              name='weight'
-              label='Weight (kg)'
-              type='number'
-              fullWidth
-              defaultValue={userHealthProfileInitialValues.weight}
-            />
-            <TextField
-              name='height'
-              label='Height (cm)'
-              type='number'
-              fullWidth
-              defaultValue={userHealthProfileInitialValues.height}
-            />
-            <TextField
-              name='age'
-              label='Age'
-              type='number'
-              fullWidth
-              defaultValue={userHealthProfileInitialValues.age}
-            />
-            <TextField
-              name='average_sleeping_time'
-              label='Avg Sleeping Time (hrs)'
-              type='number'
-              fullWidth
-              defaultValue={
-                userHealthProfileInitialValues.average_sleeping_time
-              }
-            />
-            <FormControl fullWidth>
-              <InputLabel id='meal-selector-label'>
-                Eating Preference
-              </InputLabel>
-              <Select
-                labelId='meal-selector-label'
-                id='meal-selector'
-                name='eating_preference'
-                defaultValue={userHealthProfileInitialValues.eating_preference}
-                input={<OutlinedInput label='Eating Preference' />}
-              >
-                <MenuItem value='none'>None</MenuItem>
-                <MenuItem value='veg'>Veg</MenuItem>
-                <MenuItem value='non-veg'>Non-Veg</MenuItem>
-                <MenuItem value='vegan'>Vegan</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              control={
-                <Checkbox name='diabetes' defaultChecked={formState.diabetes} />
-              }
-              label='Diabetic'
-            />
-          </Box>
-          <TextField
-            name='additional_notes'
-            label='Additional Info'
-            fullWidth
-            defaultValue={userHealthProfileInitialValues.additional_notes}
-            multiline
-          />
 
-          <Button type='submit' color='primary' loading={isPending}>
+          <Grid container spacing={1}>
+            <Grid size={6}>
+              <TextField
+                name='blood_pressure'
+                label='Blood Pressure (mmHG)'
+                fullWidth
+                defaultValue={userHealthProfileInitialValues.blood_pressure}
+              />
+            </Grid>
+            <Grid size={6}>
+              <TextField
+                name='allergies'
+                label='Allergies'
+                fullWidth
+                defaultValue={userHealthProfileInitialValues.allergies}
+              />
+            </Grid>
+            <Grid size={6}>
+              <TextField
+                name='weight'
+                label='Weight (kg)'
+                type='number'
+                fullWidth
+                defaultValue={userHealthProfileInitialValues.weight}
+              />
+            </Grid>
+            <Grid size={6}>
+              <TextField
+                name='height'
+                label='Height (cm)'
+                type='number'
+                fullWidth
+                defaultValue={userHealthProfileInitialValues.height}
+              />
+            </Grid>
+            <Grid size={6}>
+              <TextField
+                name='age'
+                label='Age'
+                type='number'
+                fullWidth
+                defaultValue={userHealthProfileInitialValues.age}
+              />
+            </Grid>
+            <Grid size={6}>
+              <TextField
+                name='average_sleeping_time'
+                label='Avg Sleeping Time (hrs)'
+                type='number'
+                fullWidth
+                defaultValue={
+                  userHealthProfileInitialValues.average_sleeping_time
+                }
+              />
+            </Grid>
+            <Grid size={6}>
+              <FormControl fullWidth>
+                <InputLabel id='meal-selector-label'>
+                  Eating Preference
+                </InputLabel>
+                <Select
+                  labelId='meal-selector-label'
+                  id='meal-selector'
+                  name='eating_preference'
+                  defaultValue={
+                    userHealthProfileInitialValues.eating_preference
+                  }
+                  input={<OutlinedInput label='Eating Preference' />}
+                >
+                  <MenuItem value='none'>None</MenuItem>
+                  <MenuItem value='veg'>Veg</MenuItem>
+                  <MenuItem value='non-veg'>Non-Veg</MenuItem>
+                  <MenuItem value='vegan'>Vegan</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={6}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name='diabetes'
+                    defaultChecked={formState.diabetes}
+                  />
+                }
+                label='Diabetic'
+              />
+            </Grid>
+            <Grid size={12}>
+              <TextField
+                name='additional_notes'
+                label='Additional Info'
+                fullWidth
+                defaultValue={userHealthProfileInitialValues.additional_notes}
+                multiline
+              />
+            </Grid>
+          </Grid>
+
+          <Button
+            type='submit'
+            color='primary'
+            loading={isPending}
+            sx={{ mt: 0.75 }}
+            disabled={!userRole || isPhoneNumberErrored || !whatsAppPhoneNumber}
+          >
             Submit
           </Button>
         </form>
