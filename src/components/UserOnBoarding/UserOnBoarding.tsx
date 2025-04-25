@@ -89,7 +89,7 @@ const UserOnBoarding = ({ children }) => {
     }
   };
 
-  if (Boolean(session?.role)) return children;
+  // if (Boolean(session?.role)) return children;
 
   return (
     <Box
@@ -98,8 +98,9 @@ const UserOnBoarding = ({ children }) => {
       display='flex'
       alignItems='center'
       flexDirection='column'
+      p={1}
     >
-      <Typography variant='h1' p={3}>
+      <Typography variant='h1' p={2}>
         Welcome aboard 🎉
       </Typography>
       <Box
