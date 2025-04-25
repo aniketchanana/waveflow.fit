@@ -89,7 +89,7 @@ const UserOnBoarding = ({ children }) => {
     }
   };
 
-  // if (Boolean(session?.role)) return children;
+  if (Boolean(session?.role)) return children;
 
   return (
     <Box
