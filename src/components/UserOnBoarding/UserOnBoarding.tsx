@@ -1,5 +1,6 @@
 'use client';
 import {
+  Badge,
   Box,
   Button,
   Checkbox,
@@ -10,10 +11,10 @@ import {
   InputLabel,
   MenuItem,
   OutlinedInput,
-  Radio,
-  RadioGroup,
   Select,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
 import { useActionState, useState } from 'react';
@@ -41,7 +42,7 @@ type TUserHealthProfile = typeof userHealthProfileInitialValues;
 
 const UserOnBoarding = ({ children }) => {
   const { fetchSession: refetchSession, session } = useSession();
-  const [userRole, setUserRole] = useState('');
+  const [userRole, setUserRole] = useState<null | EUserRole>(EUserRole.MANAGER);
   const [whatsAppPhoneNumber, setWhatsAppPhoneNumber] = useState<string>('');
   const [isPhoneNumberErrored, setIsPhoneNumberErrored] = useState(false);
   const { showToast } = useToast();
@@ -79,6 +80,15 @@ const UserOnBoarding = ({ children }) => {
     userHealthProfileInitialValues
   );
 
+  const handleRoleChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    newRole: EUserRole
+  ) => {
+    if (newRole) {
+      setUserRole(newRole);
+    }
+  };
+
   if (Boolean(session?.role)) return children;
 
   return (
@@ -102,28 +112,28 @@ const UserOnBoarding = ({ children }) => {
           <FormLabel sx={{ fontWeight: 'bold' }}>
             How you want to use this platform?
           </FormLabel>
-          <RadioGroup
-            row
+          <ToggleButtonGroup
             value={userRole}
-            onChange={(e) => setUserRole(e.target.value as EUserRole)}
-            sx={{ gap: 1 }}
+            exclusive
+            onChange={handleRoleChange}
           >
-            {/* <FormControlLabel
-              value={EUserRole.TRAINER}
-              control={<Radio />}
-              label='As Trainer'
-            /> */}
-            <FormControlLabel
-              value={EUserRole.TRAINEE}
-              control={<Radio />}
-              label='As Trainee'
-            />
-            <FormControlLabel
-              value={EUserRole.MANAGER}
-              control={<Radio />}
-              label='As Gym manager'
-            />
-          </RadioGroup>
+            <Badge
+              color='secondary'
+              badgeContent={userRole === EUserRole.MANAGER ? '' : null}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+            >
+              <ToggleButton value={EUserRole.MANAGER}>Gym manager</ToggleButton>
+            </Badge>
+            <Badge
+              badgeContent={userRole === EUserRole.TRAINEE ? '' : null}
+              color='secondary'
+            >
+              <ToggleButton value={EUserRole.TRAINEE}>Trainee</ToggleButton>
+            </Badge>
+          </ToggleButtonGroup>
         </FormControl>
 
         <FormControl>

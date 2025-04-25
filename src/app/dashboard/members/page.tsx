@@ -159,10 +159,10 @@ const Members = () => {
             onChange={handleViewChange}
             aria-label='List view'
           >
-            <ToggleButton value={EViewType.LIST_VIEW} aria-label='centered'>
+            <ToggleButton value={EViewType.LIST_VIEW}>
               <WindowIcon />
             </ToggleButton>
-            <ToggleButton value={EViewType.GRID_VIEW} aria-label='Grid view'>
+            <ToggleButton value={EViewType.GRID_VIEW}>
               <TableRowsIcon />
             </ToggleButton>
           </ToggleButtonGroup>
